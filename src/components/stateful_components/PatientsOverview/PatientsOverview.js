@@ -1,31 +1,53 @@
 import React, { Component } from 'react';
+import rdf from "rdflib";
+import auth from "solid-auth-client";
 
 class PatientsOverview extends Component {
 
     state = {
-
+        patients: [
+            {webId:'https://aika.solid.community/profile/card#me',
+            authorized : false},
+            {webId:'https://malte18.solid.community/profile/card#me',
+            authorized: false}
+        ]
     }
 
     componentDidMount() {
-        this.fetchUser();
+        // this.fetchUser();
+        this.fetchUserHealthData()
     }
 
-    fetchUser = () => {
-        auth.trackSession(session => {
-            if (!session) {
-                console.log("You are not logged in");
-            } else {
-                const webId = session.webId;
-                console.log(webId);
+    fetchUserHealthData = () => {
+        const store = rdf.graph();
+        const fetcher = new rdf.Fetcher(store);
 
-                const store = rdf.graph();
+        const healthDataPromises = this.state.patients.map((patient, index) => {
 
-                this.setState({
-                    webId: webId
-                });
-            }
-        });
-    };
+            console.log(patient, index);
+            return patient.webId.replace("profile/card#me", "private/health/");
+
+        }).map((patienHealthDataAddress, index) => {
+            
+            console.log(patienHealthDataAddress);
+            
+            return fetcher.load(patienHealthDataAddress).then(res => {
+
+                this.updatePatientAccessStatus(index, true);
+
+            }).catch(err => {
+                
+                console.log('this is an error ' + err);
+
+            })
+        })
+    }
+
+    updatePatientAccessStatus(index, authorizationStatus) {
+        let newState = {...this.state};
+        newState.patients[index].authorized = authorizationStatus;
+        this.setState(newState);
+      }
 
 
     sendNotification = () => {
@@ -51,7 +73,7 @@ class PatientsOverview extends Component {
               PREQ:financialRisklevel "high"@en;
               PREQ:legalRisklevel "medium"@en;
               PREQ:requests <` +
-            this.state.webId.replace("profile/card#me", "health/") +
+            this.state.webId.replace("profile/card#me", "private/health/") +
             `>;
               PREQ:requestFrom <` +
             window.location.href +
@@ -70,9 +92,35 @@ class PatientsOverview extends Component {
 
     render() {
 
-
+        return (
+            <div>
+                hello, this a patient overview.
+            </div>
+        )
 
     }
 }
 
 export default PatientsOverview;
+
+
+
+
+// fetchUser = () => {
+//     auth.trackSession(session => {
+//         if (!session) {
+//             console.log("You are not logged in");
+//         } else {
+//             const webId = session.webId;
+//             console.log(webId);
+
+//             const store = rdf.graph();
+
+//             this.setState({
+//                 webId: webId
+//             });
+
+//             // this.sendNotification();
+//         }
+//     });
+// };
