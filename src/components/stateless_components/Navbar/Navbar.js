@@ -1,10 +1,16 @@
 import React from 'react'; 
-import {Link, NavLink } from 'react-router-dom'; 
+import { Link, NavLink } from 'react-router-dom'; 
 
 
 const Navbar = () => {
-    <Navbar bg="dark" variant="dark">
-        
-
-    </Navbar>
+    return(
+        <nav className="nav-wrapper grey darken-3">
+            <div className="container">
+                <Link to='/' className="brand-logo">Health-App</Link>
+            </div>
+        </nav>
+    )
 }
+
+
+export default Navbar; 
