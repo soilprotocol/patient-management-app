@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import rdf from "rdflib";
 import auth from "solid-auth-client";
+import PatientList from '../../stateless_components/Patient/PatientList';
 
 class PatientsOverview extends Component {
 
@@ -32,6 +33,7 @@ class PatientsOverview extends Component {
             console.log(patienHealthDataAddress);
             
             return fetcher.load(patienHealthDataAddress).then(res => {
+                console.log(res); 
 
                 this.updatePatientAccessStatus(index, true);
 
@@ -50,8 +52,10 @@ class PatientsOverview extends Component {
       }
 
 
-    sendNotification = () => {
-        const inboxAddress = this.state.webId.replace("profile/card#me", "inbox");
+    requestAccess = (webId) => {
+        console.log("request is being build")
+        console.log(webId); 
+        const inboxAddress = webId.replace("profile/card#me", "inbox");
 
         const store = rdf.graph();
         const fetcher = new rdf.Fetcher(store);
@@ -73,10 +77,10 @@ class PatientsOverview extends Component {
               PREQ:financialRisklevel "high"@en;
               PREQ:legalRisklevel "medium"@en;
               PREQ:requests <` +
-            this.state.webId.replace("profile/card#me", "private/health/") +
+            webId.replace("profile/card#me", "private/health/") +
             `>;
               PREQ:requestFrom <` +
-            window.location.href +
+            "https://doktormartens.solid.community/profile/card#me" +
             `>.
             `; //Needs to be updated with domain of hosted dr marten page
 
@@ -87,15 +91,14 @@ class PatientsOverview extends Component {
             body: createTurtle
         };
         fetcher.webOperation("POST", inboxAddress, options);
+        console.log("successfully sent request"); 
     };
 
 
     render() {
 
         return (
-            <div>
-                hello, this a patient overview.
-            </div>
+            <PatientList patients={this.state.patients} onClick={this.requestAccess.bind(this)}/>
         )
 
     }

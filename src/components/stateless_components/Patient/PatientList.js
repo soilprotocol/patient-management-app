@@ -4,13 +4,13 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 
-const PatientList = () => {
-    const patients = ["Malte Sielski", "Elliot Brunet"]
+const PatientList = props => {
+    const patients = props.patients
 
     const patientsCardMarkup = patients.map(patient => {
         return (
             <Col >
-                <PatientCard patient={patient}/> 
+                <PatientCard patient={patient} onClick={props.onClick} /> 
             </Col>
         )
     })
