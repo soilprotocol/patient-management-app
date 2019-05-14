@@ -31,12 +31,16 @@ class PatientDetails extends Component {
     render() {
         return (
             <div className="container z-depth-2" style={{marginTop:"50px", height: "500px"}}>
-                <div class="row" style={{marginLeft:"60px"}}>
+                <div class="row" style={{marginLeft:"30px", marginRight:"30px"}}>
                     <div class="col s3"><img src="https://malte18.solid.community/profile/Bildschirmfoto%202018-07-27%20um%2016.22.46.png" style={{width: "100%", marginTop:"40px"}}/></div>
                     <div class="col s9" style={{ marginTop:"12px"}}><h4>Patient Name</h4></div>
-                    <div class="col s9" style={{ marginTop:"12px"}}><a style={{fontSize: "20px"}}>Age:</a></div>
+                    <div class="col s9" style={{ marginTop:"3px"}}><a style={{fontSize: "20px"}}>Age:</a></div>
                     <div class="col s9" style={{ marginTop:"12px"}}><a style={{fontSize: "20px"}}>Blood Type:</a></div>
                     <div class="col s9" style={{ marginTop:"12px"}}><a style={{fontSize: "20px"}}>Other Cool Stuff:</a></div>
+                    <div class="col s9" style={{ marginTop:"12px"}}><a style={{fontSize: "20px"}}>Other Cool Stuff:</a></div>
+                </div>
+                <div class="row" style={{marginLeft:"30px", marginRight:"30px"}}>
+                    <div className="col s12"><hr /></div>
                 </div>
             </div>
         )  
