@@ -48,8 +48,21 @@ class PatientsOverview extends Component {
         let newState = {...this.state};
         newState.patients[index].authorized = authorizationStatus;
         this.setState(newState);
-      }
+    }
 
+    handleClick = (patient) => {
+        console.log(patient);
+        console.log('handling click event on patient card');
+        if (!patient.authorized) {
+            this.requestAccess(patient.webId);
+        } else {
+            console.log(this);
+            // console.log('PROPS: ' + this.props);
+            this.props.history.push({
+                pathname: '/patient/detail'
+            });
+        }
+    }
 
     requestAccess = (webId) => {
         console.log("request is being build")
@@ -97,32 +110,9 @@ class PatientsOverview extends Component {
     render() {
 
         return (
-            <PatientList patients={this.state.patients} onClick={this.requestAccess.bind(this)}/>
+            <PatientList patients={this.state.patients} onClick={this.handleClick}/>
         )
-
     }
 }
 
 export default PatientsOverview;
-
-
-
-
-// fetchUser = () => {
-//     auth.trackSession(session => {
-//         if (!session) {
-//             console.log("You are not logged in");
-//         } else {
-//             const webId = session.webId;
-//             console.log(webId);
-
-//             const store = rdf.graph();
-
-//             this.setState({
-//                 webId: webId
-//             });
-
-//             // this.sendNotification();
-//         }
-//     });
-// };
