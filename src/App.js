@@ -3,9 +3,9 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import './App.css';
 import auth from 'solid-auth-client'; 
 import Navbar from './components/stateless_components/Navbar/Navbar'; 
-import Dashboard from './components/stateless_components/Dashboard/Dashboard'; 
 import PatientsOverview from './components/stateful_components/PatientsOverview/PatientsOverview';
 import LoggedOut from './components/stateless_components/LoggedOut/LoggedOut'; 
+import PatientDetails from './components/stateful_components/PatientDetails/PatientDetails';
 
 
 class App extends React.Component {
@@ -57,7 +57,8 @@ class App extends React.Component {
             webId={this.state.webId}
             />
             <Switch>
-              <Route exact path ="/" render={() => this.state.webId ? <PatientsOverview /> : <LoggedOut /> } /> 
+              <Route exact path ="/" component={this.state.webId ? PatientsOverview : LoggedOut} /> 
+              <Route exact path ="/patient/detail" component= {this.state.webId ? PatientDetails : LoggedOut} /> 
             </Switch>
           </BrowserRouter>
     );
@@ -65,3 +66,6 @@ class App extends React.Component {
 }
 
 export default App;
+
+{/* <Route exact path ="/" render={() => this.state.webId ? <PatientsOverview /> : <LoggedOut /> } /> 
+<Route exact path ="/patient/detail" render={() => this.state.webId ? <PatientDetails /> : <LoggedOut /> } />  */}

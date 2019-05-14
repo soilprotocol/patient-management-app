@@ -9,7 +9,7 @@ const PatientCard = props => {
             <Card.Body>
                 <Card.Title>PatientDetails</Card.Title>
                 <Card.Text>Here can go some Text</Card.Text>
-                <Button variant="primary" onClick={() => props.onClick(props.patient.webId)}>
+                <Button variant="primary" onClick={() => props.onClick(props.patient)}>
                     {props.patient.authorized ? "Access Details" : "Request Access"}
                 </Button>
             </Card.Body>
