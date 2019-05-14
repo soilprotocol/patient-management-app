@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import rdf from "rdflib";
-import auth from "solid-auth-client";
 import PatientList from '../../stateless_components/Patient/PatientList';
 
 class PatientsOverview extends Component {
