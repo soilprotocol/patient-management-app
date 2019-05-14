@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import rdf from "rdflib";
+import { History } from 'react-router-dom'; 
 import PatientList from '../../stateless_components/Patient/PatientList';
 
 class PatientsOverview extends Component {
@@ -59,7 +60,8 @@ class PatientsOverview extends Component {
             console.log(this);
             // console.log('PROPS: ' + this.props);
             this.props.history.push({
-                pathname: '/patient/detail'
+                pathname: '/patient/detail',
+                search: '?' + patient.webId
             });
         }
     }
